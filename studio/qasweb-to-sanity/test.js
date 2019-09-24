@@ -1,52 +1,78 @@
-$_$wp(1);
-const htmlToBlock = ($_$w(1, 0), require('./src/lib/parseBody'));
-const sanitizeHTML = ($_$w(1, 1), require('./src/lib/sanitizeHTML'));
-const cheerio = ($_$w(1, 2), require('cheerio'));
-const fs = ($_$w(1, 3), require('fs'));
-const db = ($_$w(1, 4), require('./src/db'));
-const posts = ($_$w(1, 5), db.get('posts').value());
-const {length} = ($_$w(1, 6), posts);
-const $_$wvd8 = $_$w(1, 7), rand = (len = length) => {
-        $_$wf(1);
-        return $_$w(1, 8), Math.floor(Math.random() * len);
-    };
-const randomPostIds = ($_$w(1, 9), ['432']);
-const somePosts = ($_$w(1, 10), Object.entries(posts).filter(([ind, post]) => {
-    $_$wf(1);
-    return $_$w(1, 11), randomPostIds.includes(Number(ind));
-}).map(([ind, post]) => {
-    $_$wf(1);
-    return $_$w(1, 12), post;
-}).map(p => {
-    $_$wf(1);
-    let images = ($_$w(1, 13), p.images.map(img => {
-        $_$wf(1);
-        return $_$w(1, 14), img.replace('../../', 'http://qasweb.org/');
-    }));
-    return $_$w(1, 15), {
-        ...p,
-        images
-    };
-}));
-let someBlocks = ($_$w(1, 16), []);
-$_$w(1, 17), somePosts.forEach(({pageContent, title, section, id}) => {
-    $_$wf(1);
-    const $ = ($_$w(1, 18), cheerio.load(pageContent));
-    $_$w(1, 19), $('img').toArray().forEach(el => {
-        $_$wf(1);
-        if ($_$w(1, 20), ($_$w(1, 21), el.attribs) && ($_$w(1, 22), el.attribs.src)) {
-            $_$w(1, 23), el.attribs.src = el.attribs.src.replace('../../', 'http://qasweb.org/');
-        }
-    });
-    const sanitizedHtml = ($_$w(1, 24), sanitizeHTML($('.page_content_title').nextAll()));
-    const postBlock = ($_$w(1, 25), {
-        _type: 'page',
-        title,
-        section,
-        id,
-        body: htmlToBlock(sanitizedHtml)
-    });
-    $_$w(1, 26), someBlocks.push(postBlock);
-});
-$_$w(1, 27), $_$wv(1, 27, '1,27', 'JSON.stringify(someBlocks, null, 2)', JSON.stringify(someBlocks, null, 2), '$_$ne', 0, 0, '');
-$_$wpe(1);
+const htmlToBlock = require('./src/lib/parseBody')
+const sanitizeHTML = require('./src/lib/sanitizeHTML')
+const cheerio = require('cheerio')
+const fs = require('fs')
+
+const db = require('./src/db')
+
+const posts = db.get('posts').value()
+console.log(posts.filter(p=>p.id==='551')) 
+// random posts Ids
+const { length } = posts
+const rand = (len = length) => Math.floor(Math.random() * len)
+const randomPostIds = [551]
+// const randomPostIds = Array.from({ length: 15 }, () => rand())
+
+// random posts data
+const somePosts = Object.entries(posts)
+  .filter( ([ind, post]) => randomPostIds.includes(Number(post.id)) && post.section === 'activities')
+  // .filter(([ind, post]) => randomPostIds.includes(Number(post.id)))
+  .map(([ind, post]) => post)
+  .map(p => {
+    let images = p.images.map(img =>
+      img.replace('../../', 'http://qasweb.org/')
+    )
+    return { ...p, images }
+  })
+
+/*
+ // detect posts with tables content
+  let postsWithTable = []
+  posts.forEach(({ pageContent, section, id }) => {
+  const $ = cheerio.load(pageContent)
+  const sanitizedHtml = sanitizeHTML($('.page_content_title').nextAll())
+  const checkWithCheerio = cheerio.load(sanitizedHtml)
+
+  if (checkWithCheerio('table>tbody').html()) {
+    const len = checkWithCheerio('table>tbody tr').toArray().length
+    if (len > 8 ) {
+      postsWithTable.push(`http://www.qasweb.org/${section}/item.php?id=${id}`)
+    }
+  }
+ }) // ?.
+*/
+
+let someBlocks = []
+somePosts.forEach(({ pageContent, title, section, id }) => {
+  const $ = cheerio.load(pageContent)
+
+  $('img')
+    .toArray()
+    .forEach(el => {
+      if (el.attribs && el.attribs.src) {
+        el.attribs.src = el.attribs.src.replace('../../', 'http://qasweb.org/')
+      }
+    })
+
+  const page_content = $('.page_content_title').nextAll()
+  const sanitizedHtml = '<div> hey' + sanitizeHTML(page_content)  + ' </div>'
+    // $.html(page_content.find('img')) //?
+  // sanitizedHtml //?
+
+  console.log(`http://www.qasweb.org/${section}/item.php?id=${id}`)
+
+  // sanitizeHTML(pageContent) //?
+  const postBlock = {
+    _type: 'page',
+    title,
+    section,
+    id,
+    body: htmlToBlock(sanitizedHtml)
+  }
+  someBlocks.push(postBlock)
+})
+
+const someBlocksValues = someBlocks.map(block => JSON.stringify(block, null, 2)).join('\n') // ?
+
+// fs.writeFileSync('someBlocks.ndjson', someBlocksValues)
+// JSON.stringify(someBlocks, null, 2)//?
