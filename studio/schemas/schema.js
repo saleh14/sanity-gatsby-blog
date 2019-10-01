@@ -8,12 +8,14 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 import category from './documents/category'
 import tag from './documents/tag'
 import post from './documents/post'
-import page from './documents/page'
+import author from './documents/author'
+// import page from './documents/page'
 // import siteSettings from './documents/siteSettings'
 
 // Object types
 import bodyPortableText from './objects/bodyPortableText'
 import excerptPortableText from './objects/excerptPortableText'
+import bioPortableText from './objects/bioPortableText'
 import mainImage from './objects/mainImage'
 
 // Then we give our schema to the builder and provide the result to Sanity
@@ -31,7 +33,9 @@ export default createSchema({
     tag,
     mainImage,
     bodyPortableText,
-    excerptPortableText
+    excerptPortableText,
+    bioPortableText,
+    author
 
     // When added to this list, object types can be used as
     // { type: 'typename' } in other document schemas

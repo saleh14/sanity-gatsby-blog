@@ -4,14 +4,19 @@ export default {
   title: 'Tag',
   fields: [
     {
-      name: 'name',
+      name: 'id',
       type: 'string',
-      title: 'Name'
+      title: 'ID'
     },
     {
       name: 'name_ar',
       type: 'text',
       title: 'Arabic Name'
     }
-  ]
+  ],
+  preview: {
+    select: {
+      title: 'name_ar'
+    }
+  }
 }
