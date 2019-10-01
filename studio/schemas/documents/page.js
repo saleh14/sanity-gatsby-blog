@@ -80,6 +80,11 @@ export default {
           name: 'images',
           type: 'image',
           options: { hotspot: true }
+        },
+        {
+          title: 'Table',
+          name: 'table',
+          type: 'table'
         }
       ]
     }

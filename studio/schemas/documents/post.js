@@ -1,4 +1,4 @@
-import {format} from 'date-fns'
+import { format } from 'date-fns'
 
 export default {
   name: 'post',
@@ -8,19 +8,13 @@ export default {
     {
       name: 'title',
       type: 'string',
-      title: 'Title',
-      description: 'Titles should be catchy, descriptive, and not too long'
+      title: 'Title'
     },
     {
-      name: 'slug',
-      type: 'slug',
-      title: 'Slug',
-      description: 'Some frontends will require a slug to be set to be able to show the post',
-      options: {
-        source: 'title',
-        maxLength: 96
-      }
-    },
+      name:'id',
+      type:'string',
+      title: 'رقم الموضوع'
+    }
     {
       name: 'publishedAt',
       type: 'datetime',
@@ -40,27 +34,21 @@ export default {
         'This ends up on summary pages, on Google, when people share your post in social media.'
     },
     {
-      name: 'authors',
-      title: 'Authors',
-      type: 'array',
-      of: [
-        {
-          type: 'authorReference'
-        }
-      ]
+      name: 'category',
+      type: 'reference',
+      to: {
+        type: 'category'
+      }
     },
     {
-      name: 'categories',
+      name: 'tags',
       type: 'array',
-      title: 'Categories',
-      of: [
-        {
-          type: 'reference',
-          to: {
-            type: 'category'
-          }
-        }
-      ]
+      title: 'Tags',
+      description: 'Add keywords that describes your blog.',
+      of: [{type: 'reference',to:{type:'tag'}}],
+      options: {
+        layout: 'tags'
+      }
     },
     {
       name: 'body',
@@ -104,15 +92,16 @@ export default {
       publishedAt: 'publishedAt',
       slug: 'slug',
       media: 'mainImage'
-    },
-    prepare ({title = 'No title', publishedAt, slug = {}, media}) {
-      const dateSegment = format(publishedAt, 'YYYY/MM')
-      const path = `/${dateSegment}/${slug.current}/`
-      return {
-        title,
-        media,
-        subtitle: publishedAt ? path : 'Missing publishing date'
-      }
     }
+    // ,
+    // prepare({ title = 'No title', publishedAt, slug = {}, media }) {
+    //   const dateSegment = format(publishedAt, 'YYYY/MM')
+    //   const path = `/${dateSegment}/${slug.current}/`
+    //   return {
+    //     title,
+    //     media,
+    //     subtitle: publishedAt ? path : 'Missing publishing date'
+    //   }
+    // }
   }
 }
