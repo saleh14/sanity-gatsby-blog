@@ -11,10 +11,10 @@ export default {
       title: 'Title'
     },
     {
-      name:'id',
-      type:'string',
+      name: 'id',
+      type: 'string',
       title: 'رقم الموضوع'
-    }
+    },
     {
       name: 'publishedAt',
       type: 'datetime',
@@ -45,7 +45,7 @@ export default {
       type: 'array',
       title: 'Tags',
       description: 'Add keywords that describes your blog.',
-      of: [{type: 'reference',to:{type:'tag'}}],
+      of: [{ type: 'reference', to: { type: 'tag' } }],
       options: {
         layout: 'tags'
       }
