@@ -35,6 +35,7 @@
 }
 
 .mainContent {
+  direction: rtl;
   @nest & a {
     color: var(--color-accent);
 

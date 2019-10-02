@@ -1,6 +1,7 @@
 @import '../styles/custom-media.css';
 @import '../styles/custom-properties.css';
 
+
 .content {
   background: var(--color-white);
   min-height: calc(100% - 73px - 120px);

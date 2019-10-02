@@ -38,9 +38,11 @@
 
 .text {
   /* empty */
+  direction: rtl;
 }
 
 .title {
+  direction: rtl;
   @media (hover: hover) {
     @nest .root:hover & {
       text-decoration: underline;
