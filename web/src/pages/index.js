@@ -6,7 +6,7 @@ import {
 } from '../lib/helpers'
 // import BlogPostPreviewList from '../components/blog-post-preview-list'
 import Container from '../components/container'
-import BlogPostPreviewGrid from '../components/blog-post-preview-grid'
+import BlogPostPreviewGrid from '../components/blog-post-preview-list'
 import Layout from '../containers/layout'
 
 export const query = graphql`
