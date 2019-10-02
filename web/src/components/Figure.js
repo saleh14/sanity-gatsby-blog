@@ -5,7 +5,7 @@ import clientConfig from '../../client-config'
 
 export default ({node}) => {
   const fluidProps = getFluidGatsbyImage(
-    node.asset._id,
+    node.asset && node.asset._id || null,
     {maxWidth: 675},
     clientConfig.sanity
   )
