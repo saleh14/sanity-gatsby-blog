@@ -12,7 +12,7 @@ import { responsiveTitle1 } from '../components/typography.module.css'
 export const query = graphql`
   query ArchivePageQuery {
     posts: allSanityPost(
-      limit: 30
+      limit: 40
       sort: { fields: [publishedAt], order: DESC }
     ) {
       edges {
