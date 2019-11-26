@@ -31,7 +31,6 @@ const BlogPostTemplate = props => {
   const { data, errors } = props
   const post = data && data.post
   return (
-    console.log(post) ||
     <Layout>
       {post && <BlogPost {...post} />}
     </Layout>

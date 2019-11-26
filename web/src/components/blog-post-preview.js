@@ -9,7 +9,7 @@ import styles from './blog-post-preview.module.css'
 import { responsiveTitle3 } from './typography.module.css'
 
 function BlogPostPreview(props) {
-  return console.log(props) || (
+  return (
     <Link
       className={props.isInList ? styles.inList : styles.inGrid}
       to={`/${props.category.name}/${props.sanityId}`}
