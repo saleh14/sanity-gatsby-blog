@@ -10,6 +10,7 @@ import tag from './documents/tag'
 import formPage from './documents/formPage'
 import post from './documents/post'
 import author from './documents/author'
+import person from './documents/person'
 // import page from './documents/page'
 // import siteSettings from './documents/siteSettings'
 
@@ -43,7 +44,8 @@ export default createSchema({
     form,
     formFieldSelection,
     formFieldText,
-    formPage
+    formPage,
+    person
 
     // When added to this list, object types can be used as
     // { type: 'typename' } in other document schemas
