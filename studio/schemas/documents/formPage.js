@@ -29,6 +29,11 @@ export default {
       name: 'form',
       type: 'form',
       title: 'Form'
+    },
+    {
+      name: 'registered',
+      type: 'array',
+      of: [{ type: 'person' }]
     }
   ]
 }
